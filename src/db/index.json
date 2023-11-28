@@ -1,0 +1,26 @@
+{
+    "plantas interior": {
+
+      "slug": "interior/"
+    },
+    "plantas exterior": {
+      "slug": "exterior/"
+    },
+
+    "sustratos": {
+      "slug": "sustratos/"
+    },
+    "fertilizantes": {
+      "slug": "fertilizantes/"
+    },
+    "agroquimicos": {
+      "slug": "agroquimicos/"
+    },
+    "césped": {
+      "slug": "césped/"
+    },
+    "hogar": {
+      "slug": "hogar/"
+    }
+
+  }
