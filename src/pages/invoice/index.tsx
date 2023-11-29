@@ -13,15 +13,28 @@ import {
 } from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator"
 import SvgComponent from "@/components/svg"
+import { Alert } from "@/components/ui/alert"
 
 const ReceiptPage = () => {
-  const product = useLoaderData() as unknown
+  const product = useLoaderData() as {
+    productId: string
+    timestamp: number
+    owner: string
+    direction: string
+    size: number
+    total: string
+    products: { price: string; productName: string; q: number }[]
+  }
 
   useEffect(() => {
     if (product !== null) {
       window.print()
     }
   }, [product])
+
+  if (!product) {
+    return <Alert>El pedido no existe</Alert>
+  }
 
   return (
     <>
