@@ -31,8 +31,8 @@ export default function Cart() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button className="relative" size={"icon"} variant={"outline"} onClick={handleOpen}>
-          <ShoppingCart strokeWidth={1} />
-          <Badge className="rounded-full absolute top-0  translate-y-6 translate-x-5">
+          <ShoppingCart className="[transform:rotateY(180deg)]" strokeWidth={1} />
+          <Badge className="rounded-full absolute top-0 left-0 -translate-y-3 -translate-x-4">
             {total}
           </Badge>
         </Button>

@@ -8,6 +8,7 @@ import CheckoutProvider from "./store/checkout-context.tsx"
 import CartProvider from "./store/cart-context.tsx"
 import { app } from "./services/firebase.ts"
 import { router } from "./routes/root.tsx"
+
 import "./index.css"
 
 app()

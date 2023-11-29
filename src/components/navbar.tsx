@@ -6,6 +6,7 @@ import NavLink from "./navlink"
 import SvgComponent from "./svg"
 import { Button } from "./ui/button"
 import Cart from "./cart"
+import ReceiptGenerator from "./receipt-generator"
 
 import { ModeToggle } from "@/components/mode-toggle"
 import { getNavigation } from "@/services/getNavigation"
@@ -79,15 +80,17 @@ export default function Navbar() {
               </div>
             </div>
             <div className="hidden p-2 justify-center items-center sm:flex gap-2">
-              <NavigationMenuItem asChild className="justify-center">
-                <ModeToggle />
-              </NavigationMenuItem>
+              <Cart />
+              <ReceiptGenerator />
               <Link className="justify-center flex" to={"/favoritos"}>
                 <Button size={"icon"} variant={"outline"}>
                   <HeartIcon strokeWidth={1} />
                 </Button>
               </Link>
-              <Cart />
+
+              <NavigationMenuItem asChild className="justify-center">
+                <ModeToggle />
+              </NavigationMenuItem>
             </div>
           </NavigationMenuList>
         </NavigationMenu>
@@ -141,6 +144,18 @@ function NavigationItems({ navigation }: Props) {
 function NavigationItemsHamburger({ navigation }: Props) {
   return (
     <ScrollArea className="h-[267px]">
+      <div className="sm:hidden p-4 justify-center items-center flex gap-2">
+        <Cart />
+        <ReceiptGenerator />
+        <Link className="justify-center flex" to={"/favoritos"}>
+          <Button size={"icon"} variant={"outline"}>
+            <HeartIcon strokeWidth={1} />
+          </Button>
+        </Link>
+        <NavigationMenuItem asChild className="justify-center">
+          <ModeToggle />
+        </NavigationMenuItem>
+      </div>
       {navigation.map(({ label, slug, children }) => {
         if (children) {
           return (

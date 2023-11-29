@@ -38,7 +38,7 @@ const LayoutApp = () => {
         }}
       />
       <Navbar />
-      <main className="flex-1 mt-[15px] min-w-screen h-screen relative flex flex-col items-center px-4 py-2 gap-10 justify-center ">
+      <main className="flex-1 mt-[15px] min-w-screen min-h-max relative flex flex-col items-center px-4 py-2 gap-10 justify-center ">
         <Outlet />
       </main>
       <Footer />
