@@ -3,7 +3,7 @@ import React, { useContext, createContext, useState } from "react"
 import { useToast } from "@/components/ui/use-toast"
 import useLocalStorage from "@/hooks/useLocalStorage"
 
-type action = "add" | "remove" | "clear"
+type action = "add" | "remove" | "clear" | "clearAll"
 
 type CartItem = {
   id: string
@@ -104,6 +104,18 @@ export default function CartProvider({ children }: { children: React.ReactNode }
     }
   }
 
+  const clearAllFromCart = () => {
+    try {
+      setCart([])
+      setVault([])
+
+      return
+    } catch (err) {
+      console.error(err)
+      throw new Error("algo ocurrio mal")
+    }
+  }
+
   const manage = ({ action, value }: { action?: action; value?: CartItem }) => {
     if (action && value) {
       if (action === "add") {
@@ -121,6 +133,11 @@ export default function CartProvider({ children }: { children: React.ReactNode }
 
         return
       }
+    }
+    if (action === "clearAll") {
+      clearAllFromCart()
+
+      return
     }
 
     return null

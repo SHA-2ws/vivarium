@@ -22,7 +22,8 @@ import { Input } from "@/components/ui/input"
 import { app } from "@/services/firebase"
 import { useToast } from "@/components/ui/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-
+import { useCart } from "@/store/cart-context"
+import { parsePrice } from "@/lib/utils"
 const validationOrderSchema = z.object({
   owner: z.string().min(1).max(50),
   email: z.string().min(7).email("Email invalido"),
@@ -34,6 +35,7 @@ type ValidationSchema = z.infer<typeof validationOrderSchema>
 
 const CheckoutPage = () => {
   const { products, total } = useCheckout()
+  const { manage } = useCart()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -71,7 +73,10 @@ const CheckoutPage = () => {
       })
 
       setLoading(false)
+      setOpen(false)
+      manage({ action: "clearAll" })
       toast({
+        duration: Infinity,
         title: "Se cargo una nueva orden de compra",
         description: `# ${id} `,
         action: (
@@ -81,7 +86,6 @@ const CheckoutPage = () => {
               variant={"outline"}
               onClick={() => {
                 navigator.clipboard.writeText(id)
-                setOpen(false)
               }}
             >
               <Paperclip height={17} strokeWidth={1} width={17} />
@@ -97,7 +101,7 @@ const CheckoutPage = () => {
   })
 
   return (
-    <>
+    <section className="flex w-full min-h-max">
       {products.length > 0 ? (
         <div className="grid w-full h-full gap-10 md:grid-cols-[1fr_1fr]">
           <header className="flex text-xl flex-col  w-full gap-5 justify-center items-center">
@@ -116,19 +120,19 @@ const CheckoutPage = () => {
                     Generar Orden de Compra
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="flex flex-col  w-full gap-5">
+                <DialogContent className="flex w-[280px] flex-col gap-5">
                   <DialogHeader className="flex flex-col  w-full  gap-5">
                     <DialogTitle className="text-start self-start">Orden de Compra #{}</DialogTitle>
                     <section className="flex flex-col r gap-5">
                       <form className="w-full flex-col flex gap-4">
                         <label className="flex flex-col gap-2">
-                          Nombre
+                          Nombre Completo
                           <Input
                             {...register("owner")}
                             required
                             className="w-full"
                             name="owner"
-                            placeholder="Propietario de orden de compra"
+                            placeholder="Juan Doe"
                             type="text"
                           />
                           {Boolean(errors.owner) && (
@@ -136,13 +140,13 @@ const CheckoutPage = () => {
                           )}
                         </label>
                         <label className="flex flex-col gap-2">
-                          Email
+                          E-mail
                           <Input
                             {...register("email")}
                             required
                             className="w-full"
                             name="email"
-                            placeholder="Correo del propietario de orden de compra"
+                            placeholder="TuSitio@Ejemplo.com"
                             type="email"
                           />
                           {Boolean(errors.email) && (
@@ -150,13 +154,13 @@ const CheckoutPage = () => {
                           )}
                         </label>
                         <label className="flex flex-col gap-2">
-                          Direccion de envío
+                          Domicílio
                           <Input
                             {...register("direction")}
                             required
                             className="w-full"
                             name="direction"
-                            placeholder="Dirección de envío"
+                            placeholder="Calle 123"
                             type="text"
                           />
                           {Boolean(errors.direction) && (
@@ -164,12 +168,12 @@ const CheckoutPage = () => {
                           )}
                         </label>
                         <label className="flex flex-col gap-2">
-                          Descripcion
+                          Descripción
                           <Input
                             {...register("coments")}
                             className="w-full"
                             name="coments"
-                            placeholder="Especifique otros detalles acerca de la orden de compra"
+                            placeholder="Contenido fragil..."
                             type="text"
                           />
                         </label>
@@ -234,7 +238,7 @@ const CheckoutPage = () => {
                         <h3>{productName}</h3>
                         <span>Unidades: {q}</span>
                         <p className="inline-flex gap-2">
-                          <span>{price}</span>
+                          <span>{parsePrice(price, q)}</span>
                         </p>
                       </legend>
                     </header>
@@ -243,6 +247,12 @@ const CheckoutPage = () => {
                       className="-translate-x-5 absolute -translate-y-2 bottom-0 right-0"
                       size={"icon"}
                       variant={"outline"}
+                      onClick={() =>
+                        manage({
+                          action: "clear",
+                          value: { id: productId, q, name: productName }
+                        })
+                      }
                     >
                       <Trash2 strokeWidth={1} />
                     </Button>
@@ -267,7 +277,7 @@ const CheckoutPage = () => {
           </Button>
         </article>
       )}
-    </>
+    </section>
   )
 }
 

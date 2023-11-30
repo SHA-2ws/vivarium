@@ -53,8 +53,8 @@ export default function Navbar() {
                 {/**
                  * componente de busqueda
                  */}
-                <Input className="w-[90%]" placeholder="Búsqueda..." />
-                <Button size={"icon"} variant={"outline"}>
+                <Input disabled className="w-[90%]" placeholder="Búsqueda..." />
+                <Button disabled size={"icon"} variant={"outline"}>
                   <SearchIcon strokeWidth={1} />
                 </Button>
 
@@ -82,11 +82,10 @@ export default function Navbar() {
             <div className="hidden p-2 justify-center items-center sm:flex gap-2">
               <Cart />
               <ReceiptGenerator />
-              <Link className="justify-center flex" to={"/favoritos"}>
-                <Button size={"icon"} variant={"outline"}>
-                  <HeartIcon strokeWidth={1} />
-                </Button>
-              </Link>
+
+              <Button disabled className="justify-center" size={"icon"} variant={"outline"}>
+                <HeartIcon strokeWidth={1} />
+              </Button>
 
               <NavigationMenuItem asChild className="justify-center">
                 <ModeToggle />
@@ -147,11 +146,9 @@ function NavigationItemsHamburger({ navigation }: Props) {
       <div className="sm:hidden p-4 justify-center items-center flex gap-2">
         <Cart />
         <ReceiptGenerator />
-        <Link className="justify-center flex" to={"/favoritos"}>
-          <Button size={"icon"} variant={"outline"}>
-            <HeartIcon strokeWidth={1} />
-          </Button>
-        </Link>
+        <Button disabled className="justify-center" size={"icon"} variant={"outline"}>
+          <HeartIcon strokeWidth={1} />
+        </Button>
         <NavigationMenuItem asChild className="justify-center">
           <ModeToggle />
         </NavigationMenuItem>

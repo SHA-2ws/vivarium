@@ -1,16 +1,9 @@
 import { useEffect } from "react"
 import { Outlet, ScrollRestoration, useNavigation } from "react-router-dom"
-import ProgressBar from "@badrap/bar-of-progress"
 
+import { progress } from "@/lib/utils"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-
-const progress = new ProgressBar({
-  color: "#b855b8",
-  size: 3,
-  className: "progress-glow",
-  delay: 90
-})
 
 const LayoutApp = () => {
   const navigation = useNavigation()

@@ -1,14 +1,18 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, Await } from "react-router-dom"
+import { DocumentData, QuerySnapshot } from "firebase/firestore"
 
 import ProductCard from "@/components/product-card"
-import { DetailedProduct } from "@/services/getProducts"
+import { DetailedProduct, getCleanDoc } from "@/services/getProducts"
 import CategoryBanner from "@/components/category-banner"
 import { Carousel, CarouselContainer, CarouselItem } from "@/components/ui/carousel"
 import NewIcons from "@/components/ui/icons/nuevos"
 import OffersIcon from "@/components/ui/icons/ofertas"
 
 function Home() {
-  const data = useLoaderData() as { novedades: DetailedProduct[]; ofertas: DetailedProduct[] }
+  const data = useLoaderData() as {
+    novedades: QuerySnapshot<DocumentData, DocumentData>
+    ofertas: QuerySnapshot<DocumentData, DocumentData>
+  }
 
   return (
     <>
@@ -18,13 +22,17 @@ function Home() {
         </h2>
         <Carousel>
           <CarouselContainer>
-            {data.novedades.map((product) => {
-              return (
-                <CarouselItem key={product.productId}>
-                  <ProductCard {...product} forNew />
-                </CarouselItem>
-              )
-            })}
+            <Await resolve={data.novedades}>
+              {(novedades) => {
+                return getCleanDoc(novedades, "productId").map((product) => {
+                  return (
+                    <CarouselItem key={product.productId}>
+                      <ProductCard {...(product as DetailedProduct)} forNew />
+                    </CarouselItem>
+                  )
+                })
+              }}
+            </Await>
           </CarouselContainer>
         </Carousel>
       </section>
@@ -37,13 +45,17 @@ function Home() {
         </h2>
         <Carousel>
           <CarouselContainer>
-            {data.ofertas.map((product) => {
-              return (
-                <CarouselItem key={product.productId}>
-                  <ProductCard {...product} forSale />
-                </CarouselItem>
-              )
-            })}
+            <Await resolve={data.ofertas}>
+              {(ofertas) =>
+                getCleanDoc(ofertas, "productId").map((product) => {
+                  return (
+                    <CarouselItem key={product.productId}>
+                      <ProductCard {...(product as DetailedProduct)} forSale />
+                    </CarouselItem>
+                  )
+                })
+              }
+            </Await>
           </CarouselContainer>
         </Carousel>
       </section>

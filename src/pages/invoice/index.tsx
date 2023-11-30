@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom"
+import { Link, useLoaderData } from "react-router-dom"
 import "../../index.css"
 import { useEffect } from "react"
 
@@ -13,8 +13,10 @@ import {
 } from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator"
 import SvgComponent from "@/components/svg"
-import { Alert } from "@/components/ui/alert"
-
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { parsePrice } from "@/lib/utils"
+import { progress } from "@/lib/utils"
 const ReceiptPage = () => {
   const product = useLoaderData() as {
     productId: string
@@ -23,22 +25,38 @@ const ReceiptPage = () => {
     direction: string
     size: number
     total: string
+    coments: string
+    email: string
     products: { price: string; productName: string; q: number }[]
   }
 
   useEffect(() => {
+    progress.finish()
+
     if (product !== null) {
       window.print()
     }
   }, [product])
 
   if (!product) {
-    return <Alert>El pedido no existe</Alert>
+    return (
+      <article className="place-content-center w-full h-full grid m-auto">
+        <Alert variant={"warn"}>
+          <AlertTitle>El pedido no existe</AlertTitle>
+          <AlertDescription>El numero de orden ingresado es invalido</AlertDescription>
+        </Alert>
+        <Button asChild variant={"link"}>
+          <Link className="z-50" to={"/"}>
+            Ir al Inicio
+          </Link>
+        </Button>
+      </article>
+    )
   }
 
   return (
     <>
-      <article className="place-content-center grid m-auto">
+      <article className="place-content-center w-full h-full grid m-auto">
         <section
           className="border-l-2 overflow-visible shadow-2xl shadow-dark-blue-800/90 dark:shadow-pinky/10 p-4 backdrop-blur-md rounded-lg bg-gradient-to-br from-dark-blue-800 via-dark-blue-800/20 to-dark-blue-800 dark:from-pinky/20 dark:via-pinky-100/30 dark:to-pinky/10 flex-col flex capitalize gap-5  min-h-full justify-center"
           id="invoice"
@@ -67,6 +85,10 @@ const ReceiptPage = () => {
                 <strong>Fecha: </strong>
                 <span>{product.timestamp}</span>
               </p>
+              <p>
+                <strong>Detalles: </strong>
+                <span>{product.coments}</span>
+              </p>
             </div>
 
             <Separator className="md:flex hidden" orientation={"vertical"} />
@@ -75,6 +97,10 @@ const ReceiptPage = () => {
               <p>
                 <strong>Titular: </strong>
                 {product.owner}
+              </p>
+              <p>
+                <strong>E-mail: </strong>
+                {product.email}
               </p>
               <p>
                 <strong>Direccion: </strong>
@@ -112,7 +138,7 @@ const ReceiptPage = () => {
                       <TableCell className="[text-wrap:balance]">{productName}</TableCell>
                       <TableCell>{price}</TableCell>
                       <TableCell>{q}</TableCell>
-                      <TableCell>{q}</TableCell>
+                      <TableCell>{parsePrice(price, q)}</TableCell>
                     </TableRow>
                   )
                 })}

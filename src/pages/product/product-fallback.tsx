@@ -84,8 +84,6 @@ const ProductLoading = () => {
           <Skeleton className="py-6 w-full h-6 xl:flex hidden ">Comprar Ahora</Skeleton>
         </aside>
       </section>
-
-      <section>productos relacionados</section>
     </>
   )
 }

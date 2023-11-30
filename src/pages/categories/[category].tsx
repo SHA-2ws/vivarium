@@ -38,9 +38,9 @@ function Category() {
       <aside className="h-full rounded-md p-4 bg-gradient-to-b dark:from-pinky-100/30 dark:via-pinky-100/10 from-dark-blue-700/30 via-dark-blue-700/10   flex-[0_0_23%]">
         <article className="flex flex-col my-3 gap-2 items-center justify-center">
           <p className="text-start font-bold w-full">Ordenar por:</p>
-          <Select>
+          <Select disabled>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="A-Z" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="light">Light</SelectItem>
@@ -56,14 +56,21 @@ function Category() {
           <form className="flex items-end gap-3 justify-center">
             <Label className="w-1/3">
               desde
-              <Input min={min} name="desde" placeholder={String(min)} type="number" />
+              <Input disabled min={min} name="desde" placeholder={String(min)} type="number" />
             </Label>
             <Label className="w-1/3">
               hasta
-              <Input max={max} min={min} name="hasta" placeholder={String(max)} type="number" />
+              <Input
+                disabled
+                max={max}
+                min={min}
+                name="hasta"
+                placeholder={String(max)}
+                type="number"
+              />
             </Label>
 
-            <Button size={"icon"} type="submit" variant={"outline"}>
+            <Button disabled size={"icon"} type="submit" variant={"outline"}>
               <ArrowRight />
             </Button>
           </form>

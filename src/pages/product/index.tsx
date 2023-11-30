@@ -1,6 +1,6 @@
 import { useLoaderData, useParams } from "react-router-dom"
 import { Heart, Minus, Plus } from "lucide-react"
-import { memo, useState } from "react"
+import { FormEvent, memo, useState } from "react"
 
 import { Alert } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
@@ -16,6 +16,11 @@ function Product() {
   const { value, changeImage } = useImage(product ? product.src?.join(",") : "")
 
   const [c, setC] = useState(1)
+
+  const resetC = (e: FormEvent) => {
+    e.preventDefault()
+    setC(1)
+  }
 
   const handleSum = () => {
     if (c >= 99) return
@@ -76,7 +81,7 @@ function Product() {
             >
               {product.productName}
             </h2>
-            <Button className="absolute top-0 right-0" size={"icon"} variant={"ghost"}>
+            <Button disabled className="absolute top-0 right-0" size={"icon"} variant={"ghost"}>
               <Heart />
             </Button>
             <section
@@ -94,8 +99,7 @@ function Product() {
             {product.hasStock ? "disponible" : "sin stock"}
           </Badge>
 
-          <Button className="py-6 w-full flex xl:hidden ">Comprar Ahora</Button>
-          <div className="w-full flex gap-5 items-center xl:hidden">
+          <form className="w-full flex gap-5 items-center xl:hidden" onSubmit={resetC}>
             <AddToCartButton
               hasStock={product.hasStock}
               productId={id}
@@ -109,6 +113,7 @@ function Product() {
                   className="rounded-e-none dark:bg-grey-blue/30
  text-grey-blue hover:bg-pinky/30  dark:text-pinky"
                   size={"icon"}
+                  type="button"
                   variant={"outline"}
                   onClick={handleRest}
                 >
@@ -132,6 +137,7 @@ function Product() {
                   className="rounded-s-none dark:bg-grey-blue/30
  text-grey-blue hover:bg-pinky/30  dark:text-pinky"
                   size={"icon"}
+                  type="button"
                   variant={"outline"}
                   onClick={handleSum}
                 >
@@ -139,7 +145,7 @@ function Product() {
                 </Button>
               </div>
             </div>
-          </div>
+          </form>
 
           <footer className="hidden xl:flex flex-col gap-2">
             <span>
@@ -165,17 +171,55 @@ function Product() {
         <aside className="hidden xl:flex col-span-1 text-center w-auto gap-5 [text-wrap:balance] flex-col px-8 justify-center">
           <Badge className="w-fit">{product.hasStock ? "disponible" : "sin stock"}</Badge>
 
-          <Button className="py-6"> Comprar Ahora </Button>
-          <AddToCartButton
-            hasStock={product.hasStock}
-            productId={id}
-            productName={product.productName}
-            src={product.src}
-          />
+          <form className="w-full hidden gap-5 items-center xl:flex" onSubmit={resetC}>
+            <AddToCartButton
+              hasStock={product.hasStock}
+              productId={id}
+              productName={product.productName}
+              q={c}
+              src={product.src}
+            />
+            <div className="max-w-xs mx-auto">
+              <div className="relative flex items-center max-w-[8rem]">
+                <Button
+                  className="rounded-e-none dark:bg-grey-blue/30
+ text-grey-blue hover:bg-pinky/30  dark:text-pinky"
+                  size={"icon"}
+                  type="button"
+                  variant={"outline"}
+                  onClick={handleRest}
+                >
+                  <Minus strokeWidth={1} />
+                </Button>
+                <Input
+                  data-input-counter
+                  required
+                  aria-describedby="helper-text-explanation"
+                  className="text-center m-0 p-0 font-semibold rounded-none"
+                  id="quantity-input"
+                  max={99}
+                  maxLength={2}
+                  min={0}
+                  placeholder="99"
+                  type="number"
+                  value={c}
+                  onChange={handleChange}
+                />
+                <Button
+                  className="rounded-s-none dark:bg-grey-blue/30
+ text-grey-blue hover:bg-pinky/30  dark:text-pinky"
+                  size={"icon"}
+                  type="button"
+                  variant={"outline"}
+                  onClick={handleSum}
+                >
+                  <Plus strokeWidth={1} />
+                </Button>
+              </div>
+            </div>
+          </form>
         </aside>
       </section>
-
-      <section>productos relacionados</section>
     </>
   )
 }

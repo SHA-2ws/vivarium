@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react"
-import { createBrowserRouter, Route, createRoutesFromElements } from "react-router-dom"
+import { createBrowserRouter, Route, createRoutesFromElements, defer } from "react-router-dom"
 import { collection, getDocs, getFirestore } from "firebase/firestore"
 
 const Product = lazy(() => import("@/pages/product"))
@@ -8,7 +8,7 @@ const Home = lazy(() => import("@/pages/app/app"))
 import LayoutApp from "./app"
 import CategoriesRoutes from "./categorias"
 
-import { DetailedProduct, getCleanDoc, newestProducts, salesProducts } from "@/services/getProducts"
+import { newestProducts, salesProducts } from "@/services/getProducts"
 import { getProductBy } from "@/services/getProduct"
 import { app } from "@/services/firebase"
 import CheckoutPage from "@/pages/checkout"
@@ -31,13 +31,13 @@ export const router = createBrowserRouter(
             const store = getFirestore(app())
             const db = collection(store, "products")
 
-            const novedades = await getDocs(newestProducts(db))
-            const ofertas = await getDocs(salesProducts(db))
+            const novedades = getDocs(newestProducts(db))
+            const ofertas = getDocs(salesProducts(db))
 
-            return {
-              novedades: getCleanDoc(novedades, "productId") as DetailedProduct[],
-              ofertas: getCleanDoc(ofertas, "productId") as DetailedProduct[]
-            }
+            return defer({
+              novedades,
+              ofertas
+            })
           }}
           path="/"
         />
