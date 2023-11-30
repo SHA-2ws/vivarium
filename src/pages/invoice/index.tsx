@@ -83,7 +83,7 @@ const ReceiptPage = () => {
               </h2>
               <p>
                 <strong>Fecha: </strong>
-                <span>{product.timestamp}</span>
+                <span>{new Date(product.timestamp).toLocaleDateString()}</span>
               </p>
               <p>
                 <strong>Detalles: </strong>

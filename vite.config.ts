@@ -1,16 +1,20 @@
 import path from "path"
 
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react-swc"
+import { UserConfig, defineConfig } from "vite"
+import vercel from "vite-plugin-vercel"
 import svgr from "vite-plugin-svgr"
+import react from "@vitejs/plugin-react-swc"
 import { compression } from "vite-plugin-compression2"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svgr(), react(), compression({ algorithm: "brotliCompress" })],
+  plugins: [vercel(), svgr(), react(), compression({ algorithm: "brotliCompress" })],
+  vercel: {
+    rewrites: [{ source: "/[^.]+", destination: "/index.html" }]
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
     }
   }
-})
+} as UserConfig)
