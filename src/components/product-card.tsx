@@ -49,7 +49,7 @@ function ProductCard({
       )}
       <Link
         unstable_viewTransition
-        className="relative gap-3 flex justify-center items-center truncate text-center flex-col"
+        className="relative gap-3 flex justify-center items-center text-center flex-col"
         to={`/productos/${productId}`}
       >
         <img
