@@ -1,4 +1,5 @@
-import { GithubIcon, LinkedinIcon } from "lucide-react"
+import { GithubIcon } from "lucide-react"
+import { Link } from "react-router-dom"
 
 import SvgComponent from "@/components/svg"
 
@@ -12,10 +13,9 @@ const Footer = () => {
       <section className="">
         <ul className=" flex items-center justify-center gap-5">
           <li>
-            <GithubIcon />
-          </li>
-          <li>
-            <LinkedinIcon />
+            <Link target="__blank" to={"https://github.com/SHA-2ws/vivarium"}>
+              <GithubIcon />
+            </Link>
           </li>
         </ul>
       </section>
