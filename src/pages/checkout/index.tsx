@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { doc, getFirestore, setDoc } from "firebase/firestore"
 import { ToastAction } from "@radix-ui/react-toast"
-import { Link } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import CheckoutIcon from "@/components/ui/icons/checkout"
@@ -24,6 +23,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useCart } from "@/store/cart-context"
 import { parsePrice } from "@/lib/utils"
+import NavLink from "@/components/navlink"
 const validationOrderSchema = z.object({
   owner: z.string().min(1).max(50),
   email: z.string().min(7).email("Email invalido"),
@@ -273,7 +273,7 @@ const CheckoutPage = () => {
           </Alert>
 
           <Button asChild variant="link">
-            <Link to="/categorias">Ver Categorias </Link>
+            <NavLink to="/categorias">Ver Categorias </NavLink>
           </Button>
         </article>
       )}

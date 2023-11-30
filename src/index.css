@@ -95,6 +95,11 @@
     -webkit-appearance: none;
   }
 
+  body{
+    margin: auto;
+    max-width: 1440px;
+  }
+
   #root {
     overflow: hidden;
     min-height: 100vh;

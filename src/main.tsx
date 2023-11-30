@@ -8,8 +8,8 @@ import CheckoutProvider from "./store/checkout-context.tsx"
 import CartProvider from "./store/cart-context.tsx"
 import { app } from "./services/firebase.ts"
 import { router } from "./routes/root.tsx"
-
 import "./index.css"
+import { TooltipProvider } from "./components/ui/tooltip.tsx"
 
 app()
 
@@ -17,7 +17,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <CartProvider>
       <CheckoutProvider>
-        <RouterProvider future={{ v7_startTransition: true }} router={router} />
+        <TooltipProvider>
+          <RouterProvider future={{ v7_startTransition: true }} router={router} />
+        </TooltipProvider>
         <Toaster />
       </CheckoutProvider>
     </CartProvider>

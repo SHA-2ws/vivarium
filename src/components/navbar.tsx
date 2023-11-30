@@ -7,6 +7,7 @@ import SvgComponent from "./svg"
 import { Button } from "./ui/button"
 import Cart from "./cart"
 import ReceiptGenerator from "./receipt-generator"
+import { TooltipWrapper } from "./tooltip"
 
 import { ModeToggle } from "@/components/mode-toggle"
 import { getNavigation } from "@/services/getNavigation"
@@ -61,12 +62,16 @@ export default function Navbar() {
                 <div className="flex flex-row-reverse items-center gap-2 justify-center sm:flex-row ">
                   <div className="md:hidden justify-center py-2 self-center items-center">
                     <DropdownMenu>
-                      <DropdownMenuTrigger
-                        asChild
-                        className=" h-9  w-9 p-1 justify-center active:dark:text-grey-blue-100 active:dark:bg-pinky active:bg-grey-blue active:text-pinky  m-0 dark:hover:text-pinky dark:hover:border-pinky  hover:text-grey-blue hover:border-grey-blue border border-input font-geist-bold text-base text-center items-center rounded-sm"
-                      >
-                        <MenuIcon className="text-center" strokeWidth={1} />
-                      </DropdownMenuTrigger>
+                      <TooltipWrapper text="Menú">
+                        <DropdownMenuTrigger asChild className="flex justify-center items-center">
+                          <Button
+                            className=" h-9  w-9 p-1 justify-center active:dark:text-grey-blue-100 active:dark:bg-pinky active:bg-grey-blue active:text-pinky  m-0 dark:hover:text-pinky dark:hover:border-pinky  hover:text-grey-blue hover:border-grey-blue border border-input font-geist-bold text-base text-center items-center rounded-sm"
+                            variant={"outline"}
+                          >
+                            <MenuIcon className="text-center" strokeWidth={1} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                      </TooltipWrapper>
                       <DropdownMenuContent>
                         <NavigationItemsHamburger navigation={navigation} />
                       </DropdownMenuContent>

@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { ShoppingCart } from "lucide-react"
+import { ShoppingCartIcon } from "lucide-react"
 
 import { Alert, AlertDescription } from "./ui/alert"
 import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import NavLink from "./navlink"
 import CartCard from "./cart-card"
+import { Arrow, Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip"
 
 import {
   Sheet,
@@ -29,14 +30,23 @@ export default function Cart() {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button className="relative" size={"icon"} variant={"outline"} onClick={handleOpen}>
-          <ShoppingCart className="[transform:rotateY(180deg)]" strokeWidth={1} />
-          <Badge className="rounded-full absolute top-0 left-0 -translate-y-3 -translate-x-4">
-            {total}
-          </Badge>
-        </Button>
-      </SheetTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <SheetTrigger asChild>
+            <Button className="relative" size={"icon"} variant={"outline"} onClick={handleOpen}>
+              <ShoppingCartIcon className="[transform:rotateY(180deg)]" strokeWidth={1} />
+              <Badge className="rounded-full absolute top-0 left-0 -translate-y-3 -translate-x-4">
+                {total}
+              </Badge>
+            </Button>
+          </SheetTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Carrito</p>
+          <Arrow />
+        </TooltipContent>
+      </Tooltip>
+
       <SheetContent className="overflow-auto md:h-full w-screen " side={"right"}>
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">Mi carrito </SheetTitle>
@@ -48,7 +58,7 @@ export default function Cart() {
               <AlertDescription className="w-full items-center flex justify-center">
                 <span className="inline-flex font-bold gap-2 items-center text-center">
                   {" "}
-                  <ShoppingCart /> Tu carrito esta vacio{" "}
+                  <ShoppingCartIcon /> Tu carrito esta vacio{" "}
                 </span>
               </AlertDescription>
             </Alert>

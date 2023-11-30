@@ -4,7 +4,7 @@ function Categorias() {
   return (
     <>
       <section className="flex flex-col w-full gap-5">
-        <section className="flex-1 flex gap-5 flex-wrap overflow-hidden ">
+        <section className="flex-1 flex gap-5 flex-wrap overflow-hidden justify-center items-center ">
           <Outlet />
         </section>
       </section>

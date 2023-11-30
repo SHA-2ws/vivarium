@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 
 import AddToCartButton from "./add-to-cart-button"
 import { Skeleton } from "./ui/skeleton"
+import { TooltipWrapper } from "./tooltip"
 
 import { type DetailedProduct } from "@/services/getProducts"
 import { Badge } from "@/components/ui/badge"
@@ -48,7 +49,7 @@ function ProductCard({
       )}
       <Link
         unstable_viewTransition
-        className="relative gap-3 flex justify-center items-center flex-col"
+        className="relative gap-3 flex justify-center items-center truncate text-center flex-col"
         to={`/productos/${productId}`}
       >
         <img
@@ -60,12 +61,14 @@ function ProductCard({
           width={150}
         />
 
-        <header
-          className={`relative truncate w-[150px] text-center`}
-          style={{ viewTransitionName: `title_${productId}` }}
-        >
-          {productName}
-        </header>
+        <TooltipWrapper text={productName}>
+          <header
+            className={`relative truncate  w-[150px]  text-center`}
+            style={{ viewTransitionName: `title_${productId}` }}
+          >
+            {productName}
+          </header>
+        </TooltipWrapper>
 
         {!hasStock ? (
           <Badge

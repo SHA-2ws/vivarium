@@ -2,20 +2,21 @@ import { Suspense, lazy } from "react"
 import { createBrowserRouter, Route, createRoutesFromElements, defer } from "react-router-dom"
 import { collection, getDocs, getFirestore } from "firebase/firestore"
 
-const Product = lazy(() => import("@/pages/product"))
-const Home = lazy(() => import("@/pages/app/app"))
-
 import LayoutApp from "./app"
 import CategoriesRoutes from "./categorias"
 
 import { newestProducts, salesProducts } from "@/services/getProducts"
 import { getProductBy } from "@/services/getProduct"
 import { app } from "@/services/firebase"
-import CheckoutPage from "@/pages/checkout"
 import LoadingHome from "@/pages/app/home-fallback"
 import ProductLoading from "@/pages/product/product-fallback"
 import ErrorPage from "@/pages/error-handler"
-import ReceiptPage from "@/pages/invoice"
+
+const Product = lazy(() => import("@/pages/product"))
+const Home = lazy(() => import("@/pages/app/app"))
+const ReceiptPage = lazy (() => import("@/pages/invoice"))
+const CheckoutPage = lazy(() => import ("@/pages/checkout"))
+
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

@@ -1,4 +1,4 @@
-import { Receipt } from "lucide-react"
+import { ReceiptIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
+import { Arrow, Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 // import { app } from "@/services/firebase"
@@ -42,11 +43,20 @@ function ReceiptGenerator() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button size={"icon"} variant={"outline"}>
-          <Receipt strokeWidth={1} />
-        </Button>
-      </PopoverTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <PopoverTrigger asChild>
+            <Button size={"icon"} variant={"outline"}>
+              <ReceiptIcon strokeWidth={1} />
+            </Button>
+          </PopoverTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Ver Pedidos</p>
+          <Arrow />
+        </TooltipContent>
+      </Tooltip>
+
       <PopoverContent className="w-80">
         <form className="grid gap-4">
           <div className="space-y-2">
