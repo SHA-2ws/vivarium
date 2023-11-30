@@ -10,7 +10,7 @@ import { compression } from "vite-plugin-compression2"
 export default defineConfig({
   plugins: [vercel(), svgr(), react(), compression({ algorithm: "brotliCompress" })],
   vercel: {
-    rewrites: [{ source: "/(.*)", destination: "/" }]
+    rewrites: [{ source: "/(.*)", destination: "dist/index.html" }]
   },
   resolve: {
     alias: {
