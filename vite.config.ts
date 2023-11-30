@@ -8,7 +8,7 @@ import { compression } from "vite-plugin-compression2"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vercel(), svgr(), react(), compression({ algorithm: "brotliCompress" })],
+  plugins: [react(), svgr(), vercel(), compression({ algorithm: "brotliCompress" })],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
